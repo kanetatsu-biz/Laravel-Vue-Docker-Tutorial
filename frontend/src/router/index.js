@@ -1,23 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomePage from '../views/HomePage.vue';
-import TaskPage from '../views/TaskPage.vue';
+import TodoList from '../views/TodoList.vue';
 
 const routes = [
-  {
-    path: '/',
-    name: 'HomePage',
-    component: HomePage,
-  },
-  {
-    path: '/tasks',
-    name: 'TaskPage',
-    component: TaskPage,
-  },
+    {
+        path: '/',
+        name: 'TodoList',
+        component: TodoList,
+        meta: {
+            title: 'TODOリスト'
+        }
+    },
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes,
+    history: createWebHistory(),
+    routes,
 });
 
 export default router;

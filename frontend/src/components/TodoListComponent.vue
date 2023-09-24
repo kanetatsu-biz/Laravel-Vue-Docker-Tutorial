@@ -1,9 +1,8 @@
 <template>
     <div>
-      <ul>
-        <li v-for="task in tasks" :key="task.id">{{ task.title }}</li>
-      </ul>
-      <a href="/">TOPに戻る</a>
+        <ul>
+            <li v-for="task in tasks" :key="task.id">{{ task.title }}</li>
+        </ul>
     </div>
 </template>
 
@@ -11,7 +10,6 @@
 import axios from 'axios';
 
 export default {
-
     data() {
         return {
             tasks: [],
@@ -32,4 +30,3 @@ export default {
     },
 };
 </script>
-  
