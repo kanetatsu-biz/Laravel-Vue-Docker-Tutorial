@@ -1,17 +1,25 @@
 <template>
     <div class="column-center">
         <h1 class="main-title">TODOリスト</h1>
-        <div class="todo-container">
+        <div>
             <h2 class="sub-title">未達成</h2>
-            <ul class="column-center">
-                <li v-for="task in undone_tasks" :key="task.id">{{ task.title }}</li>
-            </ul>
-            <button>&plus;</button>
+            <div class="column-center">
+                <div class="undone-task-container" v-for="task in undone_tasks" :key="task.id">
+                    <button class="checkbox"></button>
+                    <span class="task-title">{{ task.title }}</span>
+                    <button class="delete-btn">&#9003;</button>
+                </div>
+                <button class="add-btn">&plus;</button>
+            </div>
         </div>
-        <div class="todo-container">
+        <div>
             <h2 class="sub-title">達成済み</h2>
             <ul class="column-center">
-                <li v-for="task in done_tasks" :key="task.id">{{ task.title }}</li>
+                <div class="done-task-container" v-for="task in done_tasks" :key="task.id">
+                    <button class="checkbox"></button>
+                    <span class="task-title">{{ task.title }}</span>
+                    <button class="delete-btn">&#9003;</button>
+                </div>
             </ul>
         </div>
     </div>
@@ -60,6 +68,7 @@ export default {
     align-items: center;
     display: flex;
     flex-flow: column;
+    gap: 10px;
 }
 
 .main-title {
@@ -69,6 +78,70 @@ export default {
     text-decoration: underline;
 }
 
-.todo-container {
+.undone-task-container {
+    align-items: center;
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+    justify-items: center;
+}
+.done-task-container {
+}
+
+.checkbox {
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 25px;
+    margin-right: 10px;
+    width: 25px;
+}
+.checkbox:hover {
+    background-color: gray;
+}
+
+.task-title {
+    background-color: white;
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .5);
+    border-right: 30px solid lightblue;
+    padding: .5em 1em;
+}
+
+.delete-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 25px;
+    text-align: center;
+}
+.delete-btn:hover {
+    transform: scale(1.4);
+}
+
+.add-btn {
+    background: transparent;
+    border-radius: 6px;
+    color: black;
+    cursor: pointer;
+    font-size: 30px;
+    position: relative;
+    transition: .3s;
+    width: 40px;
+}
+.add-btn::before {
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%);
+    content: "";
+    height: 10px;
+    left: 5%;
+    position: absolute;
+    top: 100%;
+    transition: .3s;
+    width: 90%;
+    z-index: -1;
+}
+.add-btn:hover {
+    transform: translateY(-5px);
+}
+.add-btn:hover::before {
+    transform: translateY(5px);
 }
 </style>
