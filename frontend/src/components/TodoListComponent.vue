@@ -1,17 +1,17 @@
 <template>
-    <div class="main-container">
+    <div class="column-center">
         <h1 class="main-title">TODOリスト</h1>
-        <h2 class="sub-title">未達成</h2>
         <div class="todo-container">
-            <ul>
-                <li v-for="task in tasks" :key="task.id">{{ task.title }}</li>
+            <h2 class="sub-title">未達成</h2>
+            <ul class="column-center">
+                <li v-for="task in undone_tasks" :key="task.id">{{ task.title }}</li>
             </ul>
             <button>&plus;</button>
         </div>
-        <h2 class="sub-title">達成済み</h2>
         <div class="todo-container">
-            <ul>
-                <li v-for="task in tasks" :key="task.id">{{ task.title }}</li>
+            <h2 class="sub-title">達成済み</h2>
+            <ul class="column-center">
+                <li v-for="task in done_tasks" :key="task.id">{{ task.title }}</li>
             </ul>
         </div>
     </div>
@@ -23,19 +23,31 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            tasks: [],
+            undone_tasks: [],
+            done_tasks: [],
         };
     },
     mounted() {
         this.getTasks();
     },
     methods: {
+        // タスクを取得しSET
         getTasks() {
             axios.get('http://localhost:8000/api/tasks').then(response => {
-                this.tasks = response.data;
+                this.divideTasks(response.data);
             })
             .catch(error => {
                 console.error(error);
+            });
+        },
+        // 達成済みと未達成のタスクに分ける
+        divideTasks(tasks) {
+            tasks.forEach(task => {
+                if (task.completed) {
+                    this.done_tasks.push(task);
+                } else {
+                    this.undone_tasks.push(task);
+                }
             });
         },
     },
@@ -43,8 +55,11 @@ export default {
 </script>
 
 <style>
-.main-container {
-    margin: 0 100px;
+/* 中央揃え(共通部品) */
+.column-center {
+    align-items: center;
+    display: flex;
+    flex-flow: column;
 }
 
 .main-title {
@@ -55,8 +70,5 @@ export default {
 }
 
 .todo-container {
-    align-items: center;
-    display: flex;
-    flex-flow: column;
 }
 </style>

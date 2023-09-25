@@ -1,7 +1,5 @@
 <template>
-    <div id="app">
-        <router-view></router-view>
-    </div>
+    <router-view></router-view>
 </template>
 
 <script>
@@ -10,10 +8,3 @@ export default {
     components: {},
 };
 </script>
-
-<style>
-#app {
-    font-family: "Comic Sans MS", cursive;
-    color: black;
-}
-</style>
