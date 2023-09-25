@@ -12,6 +12,10 @@ class TaskSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Task::factory(10)->create();
+        // 未達成
+        \App\Models\Task::factory(5)->create();
+        
+        // 達成済み
+        \App\Models\Task::factory(5)->create(['completed' => true]);
     }
 }

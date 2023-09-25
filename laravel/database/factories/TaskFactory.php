@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TaskFactory extends Factory
 {
+    // タスク番号
+    static $taskNumber = 1;
+
     /**
      * Define the model's default state.
      *
@@ -17,8 +20,8 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->sentence,
-            'completed' => $this->faker->boolean,
+            'title' => 'タスク' . static::$taskNumber++ . ' ' . $this->faker->realText(20),
+            'completed' => false,
         ];
     }
 }
