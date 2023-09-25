@@ -1,8 +1,5 @@
 <template>
-    <div>
-        <h1>TODOリスト</h1>
-        <todo-list />
-    </div>
+    <todo-list />
 </template>
 
 <script>
