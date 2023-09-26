@@ -19,6 +19,7 @@
                     <button class="checkbox"></button>
                     <div class="task-title">
                         <span>{{ task.title }}</span>
+                        <br>
                         <span class="datetime">{{ '(' + formatDatetime(task.updated_at) + ')' }}</span>
                     </div>
                     <button class="delete-btn">&#9003;</button>
@@ -111,6 +112,7 @@ export default {
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .5);
     border-right: 30px solid lightblue;
     padding: .5em 1em;
+    width: 90%;
 }
 
 .datetime {
