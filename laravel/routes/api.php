@@ -22,3 +22,4 @@ use App\Http\Controllers\SampleController;
 use App\Http\Controllers\TaskController;
 
 Route::get('/tasks', [TaskController::class, 'index']);
+Route::post('/{task_id}/update', [TaskController::class, 'update']);

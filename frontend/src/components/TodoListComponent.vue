@@ -5,7 +5,7 @@
             <h2 class="sub-title">未達成</h2>
             <div class="column-center">
                 <div class="task-container" v-for="task in undone_tasks" :key="task.id">
-                    <button class="checkbox"></button>
+                    <button class="checkbox" @click="updateTask(task.id)"></button>
                     <span class="task-title">{{ task.title }}</span>
                     <button class="delete-btn">&#9003;</button>
                 </div>
@@ -16,7 +16,9 @@
             <h2 class="sub-title">達成済み</h2>
             <div class="column-center">
                 <div class="task-container" v-for="task in done_tasks" :key="task.id">
-                    <button class="checkbox"></button>
+                    <button class="checkbox" @click="updateTask(task.id)">
+                        <span class="check">&check;</span>
+                    </button>
                     <div class="task-title">
                         <span>{{ task.title }}</span>
                         <br>
@@ -36,6 +38,8 @@ import moment from "moment";
 export default {
     data() {
         return {
+            base_url: 'http://localhost:8000/api/',
+            tasks: [],
             undone_tasks: [],
             done_tasks: [],
         };
@@ -46,21 +50,36 @@ export default {
     methods: {
         // タスクを取得しSET
         getTasks() {
-            axios.get('http://localhost:8000/api/tasks').then(response => {
-                this.divideTasks(response.data);
+            axios.get(this.base_url + 'tasks').then(response => {
+                this.tasks = response.data;
+                this.divideTasks();
             })
             .catch(error => {
                 console.error(error);
             });
         },
         // 達成済みと未達成のタスクに分ける
-        divideTasks(tasks) {
-            tasks.forEach(task => {
+        divideTasks() {
+            this.tasks.forEach(task => {
                 if (task.completed) {
                     this.done_tasks.push(task);
                 } else {
                     this.undone_tasks.push(task);
                 }
+            });
+        },
+        // タスクを更新
+        updateTask(task_id) {
+            axios.post(this.base_url + task_id + '/update').then(response => {
+                // 更新後のデータを取得し表示データをリセット
+                if (response.data) {
+                    this.done_tasks = [];
+                    this.undone_tasks = [];
+                    this.getTasks();
+                }
+            })
+            .catch(error => {
+                console.error(error);
             });
         },
         // 日時をフォーマット化
@@ -99,12 +118,20 @@ export default {
     border: 2px solid black;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 40px;
     height: 25px;
     margin-right: 10px;
+    position: relative;
     width: 25px;
 }
 .checkbox:hover {
     background-color: gray;
+}
+.checkbox .check {
+    background: transparent;
+    left: -5px;
+    position: absolute;
+    top: -20px;
 }
 
 .task-title {
