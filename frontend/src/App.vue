@@ -1,5 +1,10 @@
 <template>
-    <router-view></router-view>
+    <div>
+        <router-view></router-view>
+        <footer>
+            <p>&copy; kanetatsu-biz. 2023.</p>
+        </footer>
+    </div>
 </template>
 
 <script>
@@ -8,3 +13,10 @@ export default {
     components: {},
 };
 </script>
+
+<style>
+footer {
+    margin-top: 50px;
+    text-align: center;
+}
+</style>
