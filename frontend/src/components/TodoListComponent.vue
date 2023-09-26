@@ -4,7 +4,7 @@
         <div>
             <h2 class="sub-title">未達成</h2>
             <div class="column-center">
-                <div class="undone-task-container" v-for="task in undone_tasks" :key="task.id">
+                <div class="task-container" v-for="task in undone_tasks" :key="task.id">
                     <button class="checkbox"></button>
                     <span class="task-title">{{ task.title }}</span>
                     <button class="delete-btn">&#9003;</button>
@@ -14,19 +14,24 @@
         </div>
         <div>
             <h2 class="sub-title">達成済み</h2>
-            <ul class="column-center">
-                <div class="done-task-container" v-for="task in done_tasks" :key="task.id">
+            <div class="column-center">
+                <div class="task-container" v-for="task in done_tasks" :key="task.id">
                     <button class="checkbox"></button>
-                    <span class="task-title">{{ task.title }}</span>
+                    <div class="task-title">
+                        <span>{{ task.title }}</span>
+                        <br>
+                        <span class="datetime">{{ '(' + formatDatetime(task.updated_at) + ')' }}</span>
+                    </div>
                     <button class="delete-btn">&#9003;</button>
                 </div>
-            </ul>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
+import moment from "moment";
 
 export default {
     data() {
@@ -58,6 +63,10 @@ export default {
                 }
             });
         },
+        // 日時をフォーマット化
+        formatDatetime(datetime) {
+            return moment(datetime).format('YYYY-MM-DD HH:mm');
+        },
     },
 };
 </script>
@@ -78,13 +87,12 @@ export default {
     text-decoration: underline;
 }
 
-.undone-task-container {
+.task-container {
     align-items: center;
     display: grid;
     grid-template-columns: 10% 80% 10%;
     justify-items: center;
-}
-.done-task-container {
+    width: 60vw;
 }
 
 .checkbox {
@@ -104,6 +112,11 @@ export default {
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .5);
     border-right: 30px solid lightblue;
     padding: .5em 1em;
+    width: 90%;
+}
+
+.datetime {
+    float: right;
 }
 
 .delete-btn {
