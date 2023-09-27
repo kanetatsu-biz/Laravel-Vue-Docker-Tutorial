@@ -7,7 +7,7 @@
                 <div class="task-container" v-for="task in undone_tasks" :key="task.id">
                     <button class="checkbox" @click="updateTask(task.id)"></button>
                     <span class="task-title">{{ task.title }}</span>
-                    <button class="delete-btn">&#9003;</button>
+                    <button class="delete-btn" @click="showConfirmModal()">&#9003;</button>
                 </div>
                 <button class="add-btn">&plus;</button>
             </div>
@@ -24,24 +24,33 @@
                         <br>
                         <span class="datetime">{{ '(' + formatDatetime(task.updated_at) + ')' }}</span>
                     </div>
-                    <button class="delete-btn">&#9003;</button>
+                    <button class="delete-btn" @click="showConfirmModal()">&#9003;</button>
                 </div>
             </div>
         </div>
+
+        <confirm-modal
+            :action_name="'削除'"
+            v-show="showModal"
+            @confirm-method="confirmDelete"
+        ></confirm-modal>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
 import moment from "moment";
+import confirmModal from './confirmModal.vue';
 
 export default {
+    components: { confirmModal },
     data() {
         return {
             base_url: 'http://localhost:8000/api/',
             tasks: [],
             undone_tasks: [],
             done_tasks: [],
+            showModal: false,
         };
     },
     mounted() {
@@ -85,6 +94,17 @@ export default {
         // 日時をフォーマット化
         formatDatetime(datetime) {
             return moment(datetime).format('YYYY-MM-DD HH:mm');
+        },
+        // 削除確認モーダルを表示
+        showConfirmModal() {
+            this.showModal = true;
+        },
+        // 削除確認モーダル内の選択をもとに処理
+        confirmDelete(is_confirmed) {
+            if (is_confirmed) {
+                // 削除APIを実行
+            }
+            this.showModal = false;
         },
     },
 };
