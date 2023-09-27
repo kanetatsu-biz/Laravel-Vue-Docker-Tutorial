@@ -23,4 +23,12 @@ class TaskController extends Controller
 
         return response()->json($is_success);
     }
+
+    // タスクの削除
+    public function delete(int $id)
+    {
+        $delete_count = Task::destroy($id);
+
+        return response()->json($delete_count === 1);
+    }
 }
