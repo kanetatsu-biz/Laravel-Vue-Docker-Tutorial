@@ -9,7 +9,12 @@
                     <span class="task-title">{{ task.title }}</span>
                     <button class="delete-btn" @click="showConfirmModal(task.id)">&#9003;</button>
                 </div>
-                <button class="add-btn">&plus;</button>
+                <div v-show="show_input" class="task-container">
+                    <button class="delete-btn" @click="deleteTaskInput()">&#8998;</button>
+                    <input type="text" placeholder="タスク名" v-model="input_task_name" class="task-input">
+                    <button class="create-btn" @click="createTask()">登録</button>
+                </div>
+                <button class="add-btn" @click="showTaskInput()">&plus;</button>
             </div>
         </div>
         <div>
@@ -31,7 +36,7 @@
 
         <confirm-modal
             :action_name="'削除'"
-            v-show="showModal"
+            v-show="show_modal"
             @confirm-method="confirmDelete"
         ></confirm-modal>
     </div>
@@ -50,8 +55,10 @@ export default {
             tasks: [],
             undone_tasks: [],
             done_tasks: [],
-            showModal: false,
+            show_modal: false,
             delete_id: null,
+            show_input: false,
+            input_task_name: '',
         };
     },
     mounted() {
@@ -101,7 +108,7 @@ export default {
         },
         // 削除確認モーダルを表示
         showConfirmModal(task_id) {
-            this.showModal = true;
+            this.show_modal = true;
             this.delete_id = task_id;
         },
         // 削除確認モーダル内の選択をもとに処理
@@ -118,8 +125,32 @@ export default {
                     console.error(error);
                 });
             }
-            this.showModal = false;
+            this.show_modal = false;
             this.delete_id = null;
+        },
+        // 新規タスクの入力フォームを表示
+        showTaskInput() {
+            this.show_input = true;
+        },
+        // 新規タスクの入力フォームを削除
+        deleteTaskInput() {
+            this.show_input = false;
+        },
+        // 新規タスクの登録APIを投げる
+        createTask() {
+            // axios.post(
+            //     this.base_url + '/create',
+            //     { task_name: this.input_task_name }
+            // ).then(response => {
+            //     // 更新後のデータを取得し表示データをリセット
+            //     if (response.data) {
+            //         this.resetTasks();
+            //     }
+            // })
+            // .catch(error => {
+            //     console.error(error);
+            // });
+            this.deleteTaskInput();
         },
     },
 };
@@ -218,5 +249,20 @@ export default {
 }
 .add-btn:hover::before {
     transform: translateY(5px);
+}
+
+.task-input {
+    font-size: 18px;
+    height: 100%;
+    width: 100%;
+}
+
+.create-btn {
+    color: #fff;
+    background-color: #eb6100;
+    border-radius: 100vh;
+}
+.create-btn:hover {
+    background: #f56500;
 }
 </style>
