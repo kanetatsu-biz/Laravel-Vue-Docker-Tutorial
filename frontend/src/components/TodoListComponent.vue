@@ -67,7 +67,7 @@ export default {
     methods: {
         // タスクを取得しSET
         getTasks() {
-            axios.get(this.base_url + 'tasks').then(response => {
+            axios.get(this.base_url + 'index').then(response => {
                 this.tasks = response.data;
                 this.divideTasks();
             })
@@ -134,22 +134,23 @@ export default {
         },
         // 新規タスクの入力フォームを削除
         deleteTaskInput() {
+            this.input_task_name = '';
             this.show_input = false;
         },
         // 新規タスクの登録APIを投げる
         createTask() {
-            // axios.post(
-            //     this.base_url + '/create',
-            //     { task_name: this.input_task_name }
-            // ).then(response => {
-            //     // 更新後のデータを取得し表示データをリセット
-            //     if (response.data) {
-            //         this.resetTasks();
-            //     }
-            // })
-            // .catch(error => {
-            //     console.error(error);
-            // });
+            axios.post(
+                this.base_url + 'create',
+                { task_name: this.input_task_name }
+            ).then(response => {
+                // 更新後のデータを取得し表示データをリセット
+                if (response.data) {
+                    this.resetTasks();
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
             this.deleteTaskInput();
         },
     },

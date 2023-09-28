@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -30,5 +31,15 @@ class TaskController extends Controller
         $delete_count = Task::destroy($id);
 
         return response()->json($delete_count === 1);
+    }
+
+    // タスクの新規登録
+    public function create(Request $request)
+    {
+        $new_task = Task::create([
+            'title' => $request->task_name,
+        ]);
+
+        return response()->json(!empty($new_task));
     }
 }
