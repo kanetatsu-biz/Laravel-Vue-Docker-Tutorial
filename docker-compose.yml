@@ -1,7 +1,6 @@
 version: '3'
 services:
   laravel:
-    image: composer:2
     volumes:
       - ./laravel:/var/www
     working_dir: /var/www
@@ -10,17 +9,19 @@ services:
       - "8000:8000"
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./laravel/Dockerfile
     depends_on:
       - postgres
   frontend:
-    image: node:14
     volumes:
       - ./frontend:/usr/src/app
     working_dir: /usr/src/app
     command: npm run serve
     ports:
       - "8080:8080"
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
     depends_on:
       - laravel
   postgres:
