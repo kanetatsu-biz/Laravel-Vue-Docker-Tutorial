@@ -10,7 +10,21 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class TaskFactory extends Factory
 {
     // タスク番号
-    static $taskNumber = 1;
+    static $taskNumber = 0;
+
+    // タスク名は固定で用意
+    static $titles = [
+        '会議の資料作成',
+        'HTMLとCSSの基礎学習',
+        'プレゼン資料の作成',
+        'メールの返信',
+        '顧客との打ち合わせ',
+        'データベースの基礎知識とSQLの練習',
+        '皿洗い',
+        '報告書の提出',
+        'ジムに行く',
+        '家の掃除と片付け'
+    ];
 
     /**
      * Define the model's default state.
@@ -20,8 +34,8 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => 'タスク' . static::$taskNumber++ . ' ' . $this->faker->realText(20),
-            'completed' => false,
+            'title' => 'タスク' . static::$taskNumber + 1 . ' ' . static::$titles[static::$taskNumber++],
+            'completed' => $this->faker->boolean,
         ];
     }
 }

@@ -163,14 +163,57 @@ export default {
     align-items: center;
     display: flex;
     flex-flow: column;
-    gap: 10px;
+    gap: 25px;
 }
 
 .main-title {
-    text-align: center;
+    padding: 0.5em;
+    background-color: #ffecec;
+    position: relative;
 }
+.main-title::before {
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    z-index: -1;
+    width: 100%;
+    height: 50%;
+    background-color: #bcbcbc;
+    content: "";
+    filter: blur(4px);
+}
+.main-title::after {
+    content: url(../../public/horizontal_tape.png);
+    position: absolute;
+    top: -25px;
+    right: 65px
+}
+
 .sub-title {
-    text-decoration: underline;
+    width: 5em;
+    padding: 0.5em;
+    background-color: #fffce1;
+    color: #4d4d4d;
+    box-sizing: border-box;
+    position: relative;
+}
+.sub-title::before {
+    position: absolute;
+    bottom: -5px;
+    right: 0;
+    z-index: -1;
+    transform: rotate(5deg);
+    width: 100%;
+    height: 50%;
+    background-color: #bcbcbc;
+    content: "";
+    filter: blur(4px);
+}
+.sub-title::after {
+    content: url(../../public/diagonal_tape.png);
+    position: absolute;
+    top: -25px;
+    right: 40px;
 }
 
 .task-container {
@@ -203,10 +246,22 @@ export default {
 
 .task-title {
     background-color: white;
-    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .5);
     border-right: 30px solid lightblue;
     padding: .5em 1em;
+    position: relative;
     width: 90%;
+}
+.task-title::before {
+    position: absolute;
+    bottom: 2px;
+    right: -20px;
+    z-index: -1;
+    transform: rotate(2.5deg);
+    width: 100%;
+    height: 50%;
+    background-color: #bcbcbc;
+    content: "";
+    filter: blur(4px);
 }
 
 .datetime {

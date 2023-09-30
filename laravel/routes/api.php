@@ -18,7 +18,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-use App\Http\Controllers\SampleController;
 use App\Http\Controllers\TaskController;
 
 Route::get('/index', [TaskController::class, 'index']);
